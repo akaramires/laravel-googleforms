@@ -1,4 +1,4 @@
-## Laravel 5 Google Forms (using Google Scripts)
+## Laravel 5 Google Forms (using Google Scripts) - Pull requests are welcome!
 
 Installation
 ------------
