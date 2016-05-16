@@ -1,0 +1,33 @@
+{
+  "name": "akaramires/laravel-googleforms",
+  "description": "Laravel client for Google Forms",
+  "keywords": [
+    "google scripts",
+    "google forms",
+    "api"
+  ],
+  "authors": [
+    {
+      "name": "Elmar Abdurayimov",
+      "email": "e.abdurayimov@gmail.com"
+    }
+  ],
+  "type": "library",
+  "require": {
+    "php": ">=5.5",
+    "laravel/framework": "5.1.*",
+    "guzzlehttp/guzzle": "6.*",
+    "google/apiclient": "^1.1"
+  },
+  "require-dev": {
+    "illuminate/support": "~5.0|~5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Akaramires\\GoogleForms\\": "src/",
+      "Akaramires\\GoogleForms\\Forms\\": "src/Forms/"
+    }
+  },
+  "license": "MIT",
+  "minimum-stability": "dev"
+}
