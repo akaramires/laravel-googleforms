@@ -18,6 +18,8 @@ Akaramires\GoogleForms\GoogleFormsServiceProvider::class,
 Configuration
 -------------
 
+### Laravel
+
 Laravel 5 Google Forms requires configuration.
 
 To get started, first publish the package config file:
@@ -31,6 +33,14 @@ You need also get access token
 ```
 php artisan google-forms:token
 ```
+
+### Google Scripts
+
+* Go to https://script.google.com
+* Create new project
+* Create 5 scripts (content of them you can find in `vendor/akaramires/laravel-googleforms/scripts` directory)
+* Click on Publish->Deploy as API executable
+* Copy API ID and paste into `config/googleforms.php` 
 
 Examples
 --------
