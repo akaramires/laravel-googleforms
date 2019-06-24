@@ -1,52 +1,52 @@
 function FormHelper() {
-    var args = arguments[0];
+    var args = arguments[ 0 ];
 
     var methods = {
         /**
          * Get form element
          */
-        getElement: function (item) {
+        getElement: function( item ) {
             var responseItem = {
-                index: 0,
-                id: 0,
-                title: '',
-                type: FormApp.ItemType.TEXT,
+                index    : 0,
+                id       : 0,
+                title    : '',
+                type     : FormApp.ItemType.TEXT,
                 help_text: '',
-                required: false
+                required : false
             };
 
-            if (item == null) {
+            if( item == null ) {
                 return responseItem;
             }
 
             try {
                 responseItem.index = item.getIndex();
-            } catch(err) {
+            } catch( err ) {
             }
 
             try {
                 responseItem.id = item.getId();
-            } catch(err) {
+            } catch( err ) {
             }
 
             try {
                 responseItem.title = item.getTitle();
-            } catch(err) {
+            } catch( err ) {
             }
 
             try {
                 responseItem.type = item.getType().toString();
-            } catch(err) {
+            } catch( err ) {
             }
 
             try {
                 responseItem.help_text = item.getHelpText();
-            } catch(err) {
+            } catch( err ) {
             }
 
             var asItem;
 
-            switch(item.getType().toString().toUpperCase()) {
+            switch( item.getType().toString().toUpperCase() ) {
                 case FormApp.ItemType.DURATION:
                 case FormApp.ItemType.SECTION_HEADER:
                     break;
@@ -54,55 +54,55 @@ function FormHelper() {
                 case 'TEXT':
                     try {
                         asItem = item.asTextItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.required = asItem.isRequired();
-                    } catch(err) {
+                    } catch( err ) {
                     }
                     break;
 
                 case 'PARAGRAPH_TEXT':
                     try {
                         asItem = item.asParagraphTextItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.required = asItem.isRequired();
-                    } catch(err) {
+                    } catch( err ) {
                     }
                     break;
 
                 case 'CHECKBOX':
                     try {
                         asItem = item.asCheckboxItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.required = asItem.isRequired();
-                    } catch(err) {
+                    } catch( err ) {
                     }
 
                     responseItem.choices = [];
 
                     try {
-                        if (asItem.getChoices().length) {
-                            for (var j = 0; j < asItem.getChoices().length; j++) {
-                                responseItem.choices.push(asItem.getChoices()[j].getValue());
+                        if( asItem.getChoices().length ) {
+                            for( var j = 0; j < asItem.getChoices().length; j++ ) {
+                                responseItem.choices.push( asItem.getChoices()[ j ].getValue() );
                             }
                         }
-                    } catch(err) {
+                    } catch( err ) {
                     }
 
                     try {
                         responseItem.has_other_option = asItem.hasOtherOption();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.has_other_option = false;
                     }
                     break;
@@ -110,13 +110,13 @@ function FormHelper() {
                 case 'DATE':
                     try {
                         asItem = item.asDateItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.includes_year = asItem.includesYear();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.includes_year = false;
                     }
 
@@ -125,13 +125,13 @@ function FormHelper() {
                 case 'DATETIME':
                     try {
                         asItem = item.asDateTimeItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.includes_year = asItem.includesYear();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.includes_year = false;
                     }
 
@@ -140,19 +140,19 @@ function FormHelper() {
                 case 'GRID':
                     try {
                         asItem = item.asGridItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.columns = asItem.getColumns();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.columns = [];
                     }
 
                     try {
                         responseItem.rows = asItem.getRows();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.rows = [];
                     }
 
@@ -161,32 +161,32 @@ function FormHelper() {
                 case 'IMAGE':
                     try {
                         asItem = item.asImageItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.alignment = asItem.getAlignment().toString() || FormApp.Alignment.LEFT.toString();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.alignment = FormApp.Alignment.LEFT.toString();
                     }
 
                     try {
                         responseItem.width = asItem.getWidth();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.width = 0;
                     }
 
                     try {
                         var image = asItem.getImage();
 
-                        responseItem.content_type = image.getContentType();
-                        responseItem.name = image.getName();
+                        responseItem.content_type   = image.getContentType();
+                        responseItem.name           = image.getName();
                         responseItem.is_google_type = image.isGoogleType();
-                        responseItem.data_as_string = 'data:' + image.getContentType() + ';base64,' + Utilities.base64Encode(image.getBytes());
-                    } catch(err) {
-                        responseItem.content_type = false;
-                        responseItem.name = '';
+                        responseItem.data_as_string = 'data:' + image.getContentType() + ';base64,' + Utilities.base64Encode( image.getBytes() );
+                    } catch( err ) {
+                        responseItem.content_type   = false;
+                        responseItem.name           = '';
                         responseItem.is_google_type = true;
                         responseItem.data_as_string = '';
                     }
@@ -196,53 +196,53 @@ function FormHelper() {
                 case 'LIST':
                     try {
                         asItem = item.asListItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.required = asItem.isRequired();
-                    } catch(err) {
+                    } catch( err ) {
                     }
 
                     responseItem.choices = [];
 
                     try {
-                        if (asItem.getChoices().length) {
-                            for (var j = 0; j < asItem.getChoices().length; j++) {
-                                responseItem.choices.push(asItem.getChoices()[j].getValue());
+                        if( asItem.getChoices().length ) {
+                            for( var j = 0; j < asItem.getChoices().length; j++ ) {
+                                responseItem.choices.push( asItem.getChoices()[ j ].getValue() );
                             }
                         }
-                    } catch(err) {
+                    } catch( err ) {
                     }
                     break;
 
                 case 'MULTIPLE_CHOICE':
                     try {
                         asItem = item.asMultipleChoiceItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.required = asItem.isRequired();
-                    } catch(err) {
+                    } catch( err ) {
                     }
 
                     responseItem.choices = [];
 
                     try {
-                        if (asItem.getChoices().length) {
-                            for (var j = 0; j < asItem.getChoices().length; j++) {
-                                responseItem.choices.push(asItem.getChoices()[j].getValue());
+                        if( asItem.getChoices().length ) {
+                            for( var j = 0; j < asItem.getChoices().length; j++ ) {
+                                responseItem.choices.push( asItem.getChoices()[ j ].getValue() );
                             }
                         }
-                    } catch(err) {
+                    } catch( err ) {
                     }
 
                     try {
                         responseItem.has_other_option = asItem.hasOtherOption();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.has_other_option = false;
                     }
 
@@ -251,14 +251,14 @@ function FormHelper() {
                 case 'PAGE_BREAK':
                     try {
                         asItem = item.asPageBreakItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
 
                     try {
                         responseItem.page_navigation_type = asItem.getPageNavigationType().toString();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.page_navigation_type = FormApp.PageNavigationType.CONTINUE;
                     }
 
@@ -267,36 +267,36 @@ function FormHelper() {
                 case 'SCALE':
                     try {
                         asItem = item.asScaleItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.required = asItem.isRequired();
-                    } catch(err) {
+                    } catch( err ) {
                     }
 
                     try {
                         responseItem.left_label = asItem.getLeftLabel();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.left_label = '';
                     }
 
                     try {
                         responseItem.right_label = asItem.getRightLabel();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.right_label = '';
                     }
 
                     try {
                         responseItem.lower_bound = asItem.getLowerBound();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.lower_bound = 0;
                     }
 
                     try {
                         responseItem.upper_bound = asItem.getUpperBound();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.upper_bound = 100;
                     }
                     break;
@@ -304,32 +304,32 @@ function FormHelper() {
                 case 'TIME':
                     try {
                         asItem = item.asTimeItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.required = asItem.isRequired();
-                    } catch(err) {
+                    } catch( err ) {
                     }
                     break;
 
                 case 'VIDEO':
                     try {
                         asItem = item.asVideoItem();
-                    } catch(err) {
+                    } catch( err ) {
                         asItem = item;
                     }
 
                     try {
                         responseItem.alignment = asItem.getAlignment().toString() || FormApp.Alignment.LEFT.toString();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.alignment = FormApp.Alignment.LEFT.toString();
                     }
 
                     try {
                         responseItem.width = asItem.getWidth();
-                    } catch(err) {
+                    } catch( err ) {
                         responseItem.width = 0;
                     }
                     break;
@@ -341,30 +341,30 @@ function FormHelper() {
         /**
          * Get form elements
          */
-        getElements: function (params) {
+        getElements: function( params ) {
             try {
-                var form = FormApp.openById(params.form_id);
-            } catch(err) {
+                var form = FormApp.openById( params.form_id );
+            } catch( err ) {
                 return {
-                    status: false,
+                    status : false,
                     message: err.message
                 };
             }
 
             var response = {
                 status: true,
-                data: []
+                data  : []
             };
 
             var formItems = form.getItems();
 
-            if (formItems.length) {
-                for (var i = 0; i < formItems.length; i++) {
-                    var item = formItems[i];
+            if( formItems.length ) {
+                for( var i = 0; i < formItems.length; i++ ) {
+                    var item = formItems[ i ];
 
-                    var responseItem = this.getElement(item);
+                    var responseItem = this.getElement( item );
 
-                    response.data.push(responseItem);
+                    response.data.push( responseItem );
                 }
             }
 
@@ -374,71 +374,71 @@ function FormHelper() {
         /**
          * Get form elements by multiple forms
          */
-        getElementsByMultipleForms: function (params) {
+        getElementsByMultipleForms: function( params ) {
             var response = {};
 
             var form;
 
-            if (params.forms_ids.length) {
-                for (var idIndex = 0; idIndex < params.forms_ids.length; idIndex++) {
-                    var formId = params.forms_ids[idIndex];
+            if( params.forms_ids.length ) {
+                for( var idIndex = 0; idIndex < params.forms_ids.length; idIndex++ ) {
+                    var formId = params.forms_ids[ idIndex ];
 
-                    response[formId] = {
+                    response[ formId ] = {
                         status: true,
-                        form: {},
+                        form  : {},
                         fields: []
                     };
 
                     try {
-                        form = FormApp.openById(formId);
+                        form = FormApp.openById( formId );
 
                         try {
-                            response[formId].form.show_progress = form.hasProgressBar();
-                        } catch(err) {
-                            response[formId].form.show_progress = false;
+                            response[ formId ].form.show_progress = form.hasProgressBar();
+                        } catch( err ) {
+                            response[ formId ].form.show_progress = false;
                         }
 
                         try {
-                            response[formId].form.only_one_response = form.hasLimitOneResponsePerUser();
-                        } catch(err) {
-                            response[formId].form.only_one_response = false;
+                            response[ formId ].form.only_one_response = form.hasLimitOneResponsePerUser();
+                        } catch( err ) {
+                            response[ formId ].form.only_one_response = false;
                         }
 
                         try {
-                            response[formId].form.show_link_to_another = form.hasRespondAgainLink();
-                        } catch(err) {
-                            response[formId].form.show_link_to_another = false;
+                            response[ formId ].form.show_link_to_another = form.hasRespondAgainLink();
+                        } catch( err ) {
+                            response[ formId ].form.show_link_to_another = false;
                         }
 
                         try {
-                            response[formId].form.can_edit_response = form.canEditResponse();
-                        } catch(err) {
-                            response[formId].form.can_edit_response = false;
+                            response[ formId ].form.can_edit_response = form.canEditResponse();
+                        } catch( err ) {
+                            response[ formId ].form.can_edit_response = false;
                         }
 
-                        for (var key in form) {
+                        for( var key in form ) {
                             try {
-                                if (key.substring(0, 3) == 'get') {
-                                    response[formId].form[key.replace(/([a-z])([A-Z])/g, '$1_$2').replace('get_', '').toLowerCase()] = form[key]();
+                                if( key.substring( 0, 3 ) == 'get' ) {
+                                    response[ formId ].form[ key.replace( /([a-z])([A-Z])/g, '$1_$2' ).replace( 'get_', '' ).toLowerCase() ] = form[ key ]();
                                 }
-                            } catch(err) {
+                            } catch( err ) {
                             }
                         }
 
                         var formItems = form.getItems();
 
-                        if (formItems.length) {
-                            for (var i = 0; i < formItems.length; i++) {
-                                var item = formItems[i];
+                        if( formItems.length ) {
+                            for( var i = 0; i < formItems.length; i++ ) {
+                                var item = formItems[ i ];
 
-                                var responseItem = this.getElement(item);
+                                var responseItem = this.getElement( item );
 
-                                response[formId].fields.push(responseItem);
+                                response[ formId ].fields.push( responseItem );
                             }
                         }
-                    } catch(err) {
-                        response[formId] = {
-                            status: false,
+                    } catch( err ) {
+                        response[ formId ] = {
+                            status : false,
                             message: err.message
                         };
                     }
@@ -451,33 +451,33 @@ function FormHelper() {
         /**
          * Create element
          */
-        createElement: function(params) {
+        createElement: function( params ) {
             try {
-                var form = FormApp.openById(params.form_id);
-            } catch(err) {
+                var form = FormApp.openById( params.form_id );
+            } catch( err ) {
                 return {
-                    status: false,
+                    status : false,
                     message: err.message
                 };
             }
 
             var element = null;
 
-            if (params.id > 0) {
-                element = form.getItemById(params.id);
+            if( params.id > 0 ) {
+                element = form.getItemById( params.id );
             }
 
-            if (!element) {
-                element = form['add' + toCamelCase(params.type, 1) + 'Item']();
+            if( !element ) {
+                element = form[ 'add' + toCamelCase( params.type, 1 ) + 'Item' ]();
             } else {
-                form.moveItem(element, params.index);
+                form.moveItem( element, params.index );
 
-                element = element['as' + toCamelCase(params.type, 1) + 'Item']();
+                element = element[ 'as' + toCamelCase( params.type, 1 ) + 'Item' ]();
             }
 
-            for (var key in params) {
+            for( var key in params ) {
                 try {
-                    switch(key) {
+                    switch( key ) {
                         case 'form_id':
                         case 'id':
                         case 'type':
@@ -487,72 +487,72 @@ function FormHelper() {
 
                         case 'lower_bound':
                         case 'upper_bound':
-                            element.setBounds(params.lower_bound, params.upper_bound);
+                            element.setBounds( params.lower_bound, params.upper_bound );
                             break;
 
                         case 'left_label':
                         case 'right_label':
-                            element.setLabels(params.left_label, params.right_label);
+                            element.setLabels( params.left_label, params.right_label );
                             break;
 
                         case 'has_other_option':
-                            element.showOtherOption(params[key]);
+                            element.showOtherOption( params[ key ] );
                             break;
 
                         case 'alignment':
-                            element.setAlignment(FormApp.Alignment[params[key]]);
+                            element.setAlignment( FormApp.Alignment[ params[ key ] ] );
                             break;
 
                         case 'image_url':
-                            var img = UrlFetchApp.fetch(params.image_url);
+                            var img = UrlFetchApp.fetch( params.image_url );
 
-                            element.setImage(img);
+                            element.setImage( img );
                             break;
 
                         default:
-                            element['set' + toCamelCase(key, 1)](params[key]);
+                            element[ 'set' + toCamelCase( key, 1 ) ]( params[ key ] );
                             break;
                     }
-                } catch(err) {
-                    Logger.log(err.message);
+                } catch( err ) {
+                    Logger.log( err.message );
                 }
             }
 
             return {
                 status: true,
-                data: this.getElement(element)
+                data  : this.getElement( element )
             };
         },
 
         /**
          * Delete elements
          */
-        deleteElements: function(params) {
+        deleteElements: function( params ) {
             try {
-                var form = FormApp.openById(params.form_id);
-            } catch(err) {
+                var form = FormApp.openById( params.form_id );
+            } catch( err ) {
                 return {
-                    status: false,
+                    status : false,
                     message: err.message
                 };
             }
 
             var formItems = form.getItems();
-            if (formItems.length) {
-                for (var i = 0; i < formItems.length; i++) {
-                    var item = formItems[i];
-                    if (params.ids.indexOf(item.getId()) < 0) {
-                        form.deleteItem(item);
+            if( formItems.length ) {
+                for( var i = 0; i < formItems.length; i++ ) {
+                    var item = formItems[ i ];
+                    if( params.ids.indexOf( item.getId() ) < 0 ) {
+                        form.deleteItem( item );
                     }
                 }
             }
 
             return {
-                status: true,
+                status : true,
                 message: 'Successfully elements removed.'
             };
         }
     };
 
-    return methods[args.method](args.params);
+    return methods[ args.method ]( args.params );
 }

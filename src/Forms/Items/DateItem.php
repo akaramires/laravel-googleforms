@@ -1,36 +1,32 @@
 <?php
+/**
+ * @author Elmar Abdurayimov <e.abdurayimov@gmail.com>
+ * @copyright 2019 laravel-googleforms
+ */
+
+namespace Akaramires\GoogleForms\Forms\Items;
+
+use Akaramires\GoogleForms\Forms\Enums\ItemTypeEnum;
+
+class DateItem extends Item
+{
+    const TYPE = ItemTypeEnum::TYPE_DATE;
+
+    protected $includes_year = false;
 
     /**
-     * Created by Elmar <e.abdurayimov@gmail.com> Abdurayimov
-     *
-     * @copyright (C)Copyright 2016 elmar.eatech.org
-     *               Date: 2/16/16
-     *               Time: 1:05 PM
+     * @return boolean
      */
-
-    namespace Akaramires\GoogleForms\Forms\Items;
-
-    use Akaramires\GoogleForms\Forms\Enums\ItemTypeEnum;
-
-    class DateItem extends Item
+    public function isIncludesYear()
     {
-        const TYPE = ItemTypeEnum::TYPE_DATE;
-
-        protected $includes_year = false;
-
-        /**
-         * @return boolean
-         */
-        public function isIncludesYear()
-        {
-            return (boolean)$this->includes_year;
-        }
-
-        /**
-         * @param boolean $includes_year
-         */
-        public function setIncludesYear($includes_year)
-        {
-            $this->includes_year = (boolean)$includes_year;
-        }
+        return (boolean) $this->includes_year;
     }
+
+    /**
+     * @param boolean $includes_year
+     */
+    public function setIncludesYear($includes_year)
+    {
+        $this->includes_year = (boolean) $includes_year;
+    }
+}

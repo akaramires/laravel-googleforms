@@ -1,78 +1,78 @@
 function FormAppHelper() {
-    var args = arguments[0];
+    var args = arguments[ 0 ];
 
     var methods = {
         /**
          * Create new form
          */
-        create: function (params) {
+        create: function( params ) {
             try {
                 var form = null;
 
                 try {
-                    form = FormApp.openById(params.form_id);
-                } catch(err) {
-                    form = FormApp.create(params.title);
+                    form = FormApp.openById( params.form_id );
+                } catch( err ) {
+                    form = FormApp.create( params.title );
 
-                    var fileName = params.file_name;
+                    var fileName        = params.file_name;
                     var fileDescription = params.file_description;
 
-                    moveFormToFolderForm(DriveApp.getFileById(form.getId()), fileName, fileDescription);
+                    moveFormToFolderForm( DriveApp.getFileById( form.getId() ), fileName, fileDescription );
                 }
 
-                form.setTitle(params.title);
+                form.setTitle( params.title );
 
                 try {
-                    form.setAcceptingResponses(params.accepting_responses);
-                } catch(err) {
-                }
-
-                try {
-                    form.setDescription(params.description);
-                } catch(err) {
+                    form.setAcceptingResponses( params.accepting_responses );
+                } catch( err ) {
                 }
 
                 try {
-                    form.setProgressBar(params.show_progress);
-                } catch(err) {
+                    form.setDescription( params.description );
+                } catch( err ) {
                 }
 
                 try {
-                    form.setLimitOneResponsePerUser(params.limit_one_response_per_user);
-                } catch(err) {
+                    form.setProgressBar( params.show_progress );
+                } catch( err ) {
                 }
 
                 try {
-                    form.setShuffleQuestions(params.shuffle_questions);
-                } catch(err) {
+                    form.setLimitOneResponsePerUser( params.limit_one_response_per_user );
+                } catch( err ) {
                 }
 
                 try {
-                    form.setConfirmationMessage(params.confirmation_message);
-                } catch(err) {
+                    form.setShuffleQuestions( params.shuffle_questions );
+                } catch( err ) {
                 }
 
                 try {
-                    if (!params.limit_one_response_per_user) {
-                        form.setShowLinkToRespondAgain(params.show_link_to_respond_again);
+                    form.setConfirmationMessage( params.confirmation_message );
+                } catch( err ) {
+                }
+
+                try {
+                    if( !params.limit_one_response_per_user ) {
+                        form.setShowLinkToRespondAgain( params.show_link_to_respond_again );
                     }
-                } catch(err) {
+                } catch( err ) {
                 }
 
                 try {
-                    form.setPublishingSummary(params.publish_and_show);
-                } catch(err) {
+                    form.setPublishingSummary( params.publish_and_show );
+                } catch( err ) {
                 }
 
                 try {
-                    form.setAllowResponseEdits(params.allow_response_edits);
-                } catch(err) {
+                    form.setAllowResponseEdits( params.allow_response_edits );
+                } catch( err ) {
                 }
 
-                return this.findById({form_id: form.getId()});
-            } catch(err) {
+                return this.findById( { form_id: form.getId() } );
+            } catch( err ) {
                 return {
-                    status:  false,
+                    status : false,
                     message: err.message
                 };
             }
@@ -81,15 +81,15 @@ function FormAppHelper() {
         /**
          * Fetch full form info
          */
-        fetchInfo: function (form) {
+        fetchInfo: function( form ) {
             var info = {};
 
-            for (var key in form) {
+            for( var key in form ) {
                 try {
-                    if (key.substring(0, 3) == 'get') {
-                        info[key.replace(/([a-z])([A-Z])/g, '$1_$2').replace('get_', '').toLowerCase()] = form[key]();
+                    if( key.substring( 0, 3 ) == 'get' ) {
+                        info[ key.replace( /([a-z])([A-Z])/g, '$1_$2' ).replace( 'get_', '' ).toLowerCase() ] = form[ key ]();
                     }
-                } catch(err) {
+                } catch( err ) {
                 }
             }
 
@@ -99,41 +99,41 @@ function FormAppHelper() {
         /**
          * Find form by ID
          */
-        findById: function (params) {
+        findById: function( params ) {
             try {
-                var form = FormApp.openById(params.form_id);
-            } catch(err) {
+                var form = FormApp.openById( params.form_id );
+            } catch( err ) {
                 return {
-                    status: false,
+                    status : false,
                     message: err.message
                 };
             }
 
             return {
                 status: true,
-                data: this.fetchInfo(form)
+                data  : this.fetchInfo( form )
             };
         },
 
         /**
          * Find form by URL
          */
-        findByUrl: function (params) {
+        findByUrl: function( params ) {
             try {
-                var form = FormApp.openByUrl(params.form_url);
-            } catch(err) {
+                var form = FormApp.openByUrl( params.form_url );
+            } catch( err ) {
                 return {
-                    status: false,
+                    status : false,
                     message: err.message
                 };
             }
 
             return {
                 status: true,
-                data: this.fetchInfo(form)
+                data  : this.fetchInfo( form )
             };
         }
     };
 
-    return methods[args.method](args.params);
+    return methods[ args.method ]( args.params );
 }

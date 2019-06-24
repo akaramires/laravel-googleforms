@@ -1,16 +1,17 @@
 <?php
 
-    /**
-     * Created by Elmar <e.abdurayimov@gmail.com> Abdurayimov
-     *
-     * @copyright (C)Copyright 2016 elmar.eatech.org
-     *               Date: 2/17/16
-     *               Time: 11:20 AM
-     */
-    namespace Akaramires\GoogleForms\Base;
+/**
+ * Created by Elmar <e.abdurayimov@gmail.com> Abdurayimov
+ *
+ * @copyright (C)Copyright 2016 elmar.eatech.org
+ *               Date: 2/17/16
+ *               Time: 11:20 AM
+ */
 
-    use Akaramires\GoogleForms\GoogleScript;
+namespace Akaramires\GoogleForms\Base;
 
-    class User extends GoogleScript
-    {
-    }
+use Akaramires\GoogleForms\GoogleScript;
+
+class User extends GoogleScript
+{
+}

@@ -9,26 +9,26 @@ Installation using composer:
 composer require akaramires/laravel-googleforms
 ```
 
-And add the service provider in config/app.php:
-
-```php
-Akaramires\GoogleForms\GoogleFormsServiceProvider::class,
-```
-
 Configuration
 -------------
 
+### Google oauth key
+
+1) Go to https://console.cloud.google.com and create OAuth client ID:\
+Screenshot: https://monosnap.com/direct/AvY7Ks2vmUtWkCS2mD8Eukgp3Ad8We
+
+2) Download and save the file into `storage/` directory and with name `google_client_secret.json` \
+Screenshot: https://monosnap.com/direct/OnXeCqQi2UolBrunMLvt5oGK5jG7gv
+
 ### Laravel
 
-Laravel 5 Google Forms requires configuration.
-
-To get started, first publish the package config file:
+1) Publish the package config file:
 
 ```
 php artisan vendor:publish --provider="Akaramires\GoogleForms\GoogleFormsServiceProvider"
 ```
 
-You need also get access token
+2) Get access token
 
 ```
 php artisan google-forms:token

@@ -1,36 +1,32 @@
 <?php
+/**
+ * @author Elmar Abdurayimov <e.abdurayimov@gmail.com>
+ * @copyright 2019 laravel-googleforms
+ */
+
+namespace Akaramires\GoogleForms\Forms\Items;
+
+use Akaramires\GoogleForms\Forms\Enums\ItemTypeEnum;
+
+class PageBreakItem extends Item
+{
+    const TYPE = ItemTypeEnum::TYPE_PAGE_BREAK;
+
+    protected $page_navigation_type;
 
     /**
-     * Created by Elmar <e.abdurayimov@gmail.com> Abdurayimov
-     *
-     * @copyright (C)Copyright 2016 elmar.eatech.org
-     *               Date: 2/16/16
-     *               Time: 1:05 PM
+     * @return mixed
      */
-
-    namespace Akaramires\GoogleForms\Forms\Items;
-
-    use Akaramires\GoogleForms\Forms\Enums\ItemTypeEnum;
-
-    class PageBreakItem extends Item
+    public function getPageNavigationType()
     {
-        const TYPE = ItemTypeEnum::TYPE_PAGE_BREAK;
-
-        protected $page_navigation_type;
-
-        /**
-         * @return mixed
-         */
-        public function getPageNavigationType()
-        {
-            return $this->page_navigation_type;
-        }
-
-        /**
-         * @param mixed $page_navigation_type
-         */
-        public function setPageNavigationType($page_navigation_type)
-        {
-            $this->page_navigation_type = $page_navigation_type;
-        }
+        return $this->page_navigation_type;
     }
+
+    /**
+     * @param mixed $page_navigation_type
+     */
+    public function setPageNavigationType($page_navigation_type)
+    {
+        $this->page_navigation_type = $page_navigation_type;
+    }
+}

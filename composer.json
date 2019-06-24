@@ -1,31 +1,37 @@
 {
-  "name": "akaramires/laravel-googleforms",
-  "description": "Laravel client for Google Forms",
-  "keywords": [
-    "google scripts",
-    "google forms",
-    "api",
-    "laravel"
-  ],
-  "authors": [
-    {
-      "name": "Elmar Abdurayimov",
-      "email": "e.abdurayimov@gmail.com"
-    }
-  ],
-  "type": "library",
-  "require": {
-    "php": ">=5.5",
-    "laravel/framework": "5.*",
-    "guzzlehttp/guzzle": "6.*",
-    "google/apiclient": "^1.1"
-  },
-  "autoload": {
-    "psr-4": {
-      "Akaramires\\GoogleForms\\": "src/",
-      "Akaramires\\GoogleForms\\Forms\\": "src/Forms/"
-    }
-  },
-  "license": "MIT",
-  "minimum-stability": "dev"
+    "name": "akaramires/laravel-googleforms",
+    "description": "Laravel client for Google Forms",
+    "keywords": [
+        "google scripts",
+        "google forms",
+        "api",
+        "laravel"
+    ],
+    "authors": [
+        {
+            "name": "Elmar Abdurayimov",
+            "email": "e.abdurayimov@gmail.com"
+        }
+    ],
+    "type": "library",
+    "require": {
+        "php": ">=5.6",
+        "illuminate/support": "5.8.*",
+        "guzzlehttp/guzzle": "6.*",
+        "google/apiclient": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Akaramires\\GoogleForms\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Akaramires\\GoogleForms\\GoogleFormsServiceProvider"
+            ]
+        }
+    },
+    "license": "MIT",
+    "minimum-stability": "dev"
 }
