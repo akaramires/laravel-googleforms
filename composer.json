@@ -16,7 +16,7 @@
   "type": "library",
   "require": {
     "php": ">=5.5",
-    "laravel/framework": "5.1.*",
+    "laravel/framework": "5.*",
     "guzzlehttp/guzzle": "6.*",
     "google/apiclient": "^1.1"
   },
