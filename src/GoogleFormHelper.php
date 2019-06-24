@@ -9,7 +9,6 @@
 
     namespace App\Helpers;
 
-    use App\Models\Buyer;
     use Exception;
     use Google_Service_Script;
     use Google_Service_Script_ExecutionRequest;
@@ -19,7 +18,7 @@
 
     class GoogleFormHelper
     {
-        const SCRIPT_ID = 'M6_Sb3c85l9FL17DkQnEg2zbsQ0CRhLAj';
+        const SCRIPT_ID = 'xxxxxxxxxxxx';
 
         const ELEMENT_CHECKBOX        = 'CHECKBOX';
         const ELEMENT_DATE            = 'DATE';
@@ -49,16 +48,6 @@
 
         private function __construct()
         {
-        }
-
-        public static function sendLinkToForm(Buyer $buyer, $form_url, $subject, $body)
-        {
-            Mail::send('emails.surveys.link_to_form', [
-                'form_url' => $form_url,
-                'body'     => $body,
-            ], function (Message $m) use ($buyer, $subject) {
-                $m->to($buyer->email)->subject($subject);
-            });
         }
 
         public static function getFormResponses($form_url)

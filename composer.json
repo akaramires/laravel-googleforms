@@ -20,9 +20,6 @@
     "guzzlehttp/guzzle": "6.*",
     "google/apiclient": "^1.1"
   },
-  "require-dev": {
-    "illuminate/support": "~5.*"
-  },
   "autoload": {
     "psr-4": {
       "Akaramires\\GoogleForms\\": "src/",
