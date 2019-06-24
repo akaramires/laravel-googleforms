@@ -14,25 +14,8 @@ function FormAppHelper() {
                 } catch(err) {
                     form = FormApp.create(params.title);
 
-                    var fileName = 'ENV' + params.env
-                        + '__ID' + params.id
-                        + '__UID' + params.user_id
-                        + '__PID' + params.product_id
-                        + '__CID' + params.campaign_id;
-
-                    var fileDescription = 'ENV' + params.env
-                        + '__ID-' + params.id
-                        + '__UID-' + params.user_id
-                        + '__UFNAME-' + params.user_first_name
-                        + '__ULNAME-' + params.user_last_name
-                        + '__UUSERNAME-' + params.user_username
-                        + '__UEMAIL-' + params.user_email
-
-                        + '__PID-' + params.product_id
-                        + '__PNAME-' + params.product_name
-
-                        + '__CID-' + params.campaign_id
-                        + '__CNAME-' + params.campaign_name;
+                    var fileName = params.file_name;
+                    var fileDescription = params.file_description;
 
                     moveFormToFolderForm(DriveApp.getFileById(form.getId()), fileName, fileDescription);
                 }
