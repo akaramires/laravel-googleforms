@@ -1,10 +1,3 @@
-/**
- * Created by Elmar <e.abdurayimov@gmail.com> Abdurayimov
- * @copyright (C)Copyright 2016 elmar.eatech.org
- * Date: 2/16/16
- * Time: 3:19 PM
- */
-
 function FormAppHelper() {
     var args = arguments[0];
 
@@ -21,13 +14,35 @@ function FormAppHelper() {
                 } catch(err) {
                     form = FormApp.create(params.title);
 
-                    var fileName = params.file_name;
-                    var fileDescription = params.file_description;
+                    var fileName = 'ENV' + params.env
+                        + '__ID' + params.id
+                        + '__UID' + params.user_id
+                        + '__PID' + params.product_id
+                        + '__CID' + params.campaign_id;
+
+                    var fileDescription = 'ENV' + params.env
+                        + '__ID-' + params.id
+                        + '__UID-' + params.user_id
+                        + '__UFNAME-' + params.user_first_name
+                        + '__ULNAME-' + params.user_last_name
+                        + '__UUSERNAME-' + params.user_username
+                        + '__UEMAIL-' + params.user_email
+
+                        + '__PID-' + params.product_id
+                        + '__PNAME-' + params.product_name
+
+                        + '__CID-' + params.campaign_id
+                        + '__CNAME-' + params.campaign_name;
 
                     moveFormToFolderForm(DriveApp.getFileById(form.getId()), fileName, fileDescription);
                 }
 
                 form.setTitle(params.title);
+
+                try {
+                    form.setAcceptingResponses(params.accepting_responses);
+                } catch(err) {
+                }
 
                 try {
                     form.setDescription(params.description);
@@ -55,7 +70,9 @@ function FormAppHelper() {
                 }
 
                 try {
-                    form.setShowLinkToRespondAgain(params.show_link_to_respond_again);
+                    if (!params.limit_one_response_per_user) {
+                        form.setShowLinkToRespondAgain(params.show_link_to_respond_again);
+                    }
                 } catch(err) {
                 }
 

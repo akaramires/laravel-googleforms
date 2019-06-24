@@ -1,44 +1,46 @@
-/**
- * Created by Elmar <e.abdurayimov@gmail.com> Abdurayimov
- * @copyright (C)Copyright 2016 elmar.eatech.org
- * Date: 2/24/16
- * Time: 4:49 PM
- */
-
-function getFormResponses() {
+function FormResponses() {
     var args = arguments[0];
-
-    if (args.form_url == undefined) {
-        return {
-            status: false,
-            message: 'Undefined Form URL'
-        };
-    }
+    var requestResponse = {};
 
     try {
-        var form = FormApp.openByUrl(args.form_url);
-        var formResponses = form.getResponses();
-        var responses = [];
+        if (args.form_ids && args.form_ids.length) {
+            for(var index in args.form_ids) {
+                var form_id = args.form_ids[index];
 
-        for (var i = 0; i < formResponses.length; i++) {
-            var formResponse = formResponses[i];
-            var itemResponses = formResponse.getItemResponses();
+                var form = FormApp.openById(form_id);
+                var formResponses = form.getResponses();
 
-            for (var j = 0; j < itemResponses.length; j++) {
-                var itemResponse = itemResponses[j];
+                requestResponse[form_id] = {};
 
-                responses.push({
-                    id: itemResponse.getItem().getId(),
-                    type: itemResponse.getItem().getType(),
-                    question: itemResponse.getItem().getTitle(),
-                    answer: itemResponse.getResponse()
-                });
+                for (var i = 0; i < formResponses.length; i++) {
+                    var formResponse = formResponses[i];
+                    var itemResponses = formResponse.getItemResponses();
+
+                    var responsesPerUser = [];
+
+                    for (var j = 0; j < itemResponses.length; j++) {
+                        var itemResponse = itemResponses[j];
+
+                        responsesPerUser.push({
+                            id: itemResponse.getItem().getId(),
+                            type: itemResponse.getItem().getType().toString(),
+                            question: itemResponse.getItem().getTitle(),
+                            answer: itemResponse.getResponse()
+                        });
+
+                        Logger.log(itemResponse.getResponse());
+                    }
+
+                    requestResponse[form_id][formResponse.getId()] = responsesPerUser;
+                }
             }
+        } else {
+            throw new Error('Form IDs was not found!');
         }
 
         return {
             status: true,
-            data: responses
+            data: requestResponse
         };
     } catch(err) {
         return {

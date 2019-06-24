@@ -1,10 +1,3 @@
-/**
- * Created by Elmar <e.abdurayimov@gmail.com> Abdurayimov
- * @copyright (C)Copyright 2016 elmar.eatech.org
- * Date: 2/16/16
- * Time: 5:57 PM
- */
-
 function FormHelper() {
     var args = arguments[0];
 
@@ -53,14 +46,17 @@ function FormHelper() {
 
             var asItem;
 
-            switch(item.getType().toString()) {
-                case FormApp.ItemType.PARAGRAPH_TEXT:
+            switch(item.getType().toString().toUpperCase()) {
                 case FormApp.ItemType.DURATION:
                 case FormApp.ItemType.SECTION_HEADER:
                     break;
 
-                case FormApp.ItemType.TEXT:
-                    asItem = item.asTextItem();
+                case 'TEXT':
+                    try {
+                        asItem = item.asTextItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.required = asItem.isRequired();
@@ -68,8 +64,25 @@ function FormHelper() {
                     }
                     break;
 
-                case FormApp.ItemType.CHECKBOX:
-                    asItem = item.asCheckboxItem();
+                case 'PARAGRAPH_TEXT':
+                    try {
+                        asItem = item.asParagraphTextItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
+
+                    try {
+                        responseItem.required = asItem.isRequired();
+                    } catch(err) {
+                    }
+                    break;
+
+                case 'CHECKBOX':
+                    try {
+                        asItem = item.asCheckboxItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.required = asItem.isRequired();
@@ -94,8 +107,12 @@ function FormHelper() {
                     }
                     break;
 
-                case FormApp.ItemType.DATE:
-                    asItem = item.asDateItem();
+                case 'DATE':
+                    try {
+                        asItem = item.asDateItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.includes_year = asItem.includesYear();
@@ -105,8 +122,12 @@ function FormHelper() {
 
                     break;
 
-                case FormApp.ItemType.DATETIME:
-                    asItem = item.asDateTimeItem();
+                case 'DATETIME':
+                    try {
+                        asItem = item.asDateTimeItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.includes_year = asItem.includesYear();
@@ -116,8 +137,12 @@ function FormHelper() {
 
                     break;
 
-                case FormApp.ItemType.GRID:
-                    asItem = item.asGridItem();
+                case 'GRID':
+                    try {
+                        asItem = item.asGridItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.columns = asItem.getColumns();
@@ -133,8 +158,12 @@ function FormHelper() {
 
                     break;
 
-                case FormApp.ItemType.IMAGE:
-                    asItem = item.asImageItem();
+                case 'IMAGE':
+                    try {
+                        asItem = item.asImageItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.alignment = asItem.getAlignment().toString() || FormApp.Alignment.LEFT.toString();
@@ -164,8 +193,12 @@ function FormHelper() {
 
                     break;
 
-                case FormApp.ItemType.LIST:
-                    asItem = item.asListItem();
+                case 'LIST':
+                    try {
+                        asItem = item.asListItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.required = asItem.isRequired();
@@ -184,8 +217,12 @@ function FormHelper() {
                     }
                     break;
 
-                case FormApp.ItemType.MULTIPLE_CHOICE:
-                    asItem = item.asMultipleChoiceItem();
+                case 'MULTIPLE_CHOICE':
+                    try {
+                        asItem = item.asMultipleChoiceItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.required = asItem.isRequired();
@@ -211,8 +248,13 @@ function FormHelper() {
 
                     break;
 
-                case FormApp.ItemType.PAGE_BREAK:
-                    asItem = item.asPageBreakItem();
+                case 'PAGE_BREAK':
+                    try {
+                        asItem = item.asPageBreakItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
+
 
                     try {
                         responseItem.page_navigation_type = asItem.getPageNavigationType().toString();
@@ -222,8 +264,12 @@ function FormHelper() {
 
                     break;
 
-                case FormApp.ItemType.SCALE:
-                    asItem = item.asScaleItem();
+                case 'SCALE':
+                    try {
+                        asItem = item.asScaleItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.required = asItem.isRequired();
@@ -255,8 +301,12 @@ function FormHelper() {
                     }
                     break;
 
-                case FormApp.ItemType.TIME:
-                    asItem = item.asTimeItem();
+                case 'TIME':
+                    try {
+                        asItem = item.asTimeItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.required = asItem.isRequired();
@@ -265,7 +315,11 @@ function FormHelper() {
                     break;
 
                 case 'VIDEO':
-                    asItem = item;//.asVideoItem();
+                    try {
+                        asItem = item.asVideoItem();
+                    } catch(err) {
+                        asItem = item;
+                    }
 
                     try {
                         responseItem.alignment = asItem.getAlignment().toString() || FormApp.Alignment.LEFT.toString();
@@ -311,6 +365,83 @@ function FormHelper() {
                     var responseItem = this.getElement(item);
 
                     response.data.push(responseItem);
+                }
+            }
+
+            return response;
+        },
+
+        /**
+         * Get form elements by multiple forms
+         */
+        getElementsByMultipleForms: function (params) {
+            var response = {};
+
+            var form;
+
+            if (params.forms_ids.length) {
+                for (var idIndex = 0; idIndex < params.forms_ids.length; idIndex++) {
+                    var formId = params.forms_ids[idIndex];
+
+                    response[formId] = {
+                        status: true,
+                        form: {},
+                        fields: []
+                    };
+
+                    try {
+                        form = FormApp.openById(formId);
+
+                        try {
+                            response[formId].form.show_progress = form.hasProgressBar();
+                        } catch(err) {
+                            response[formId].form.show_progress = false;
+                        }
+
+                        try {
+                            response[formId].form.only_one_response = form.hasLimitOneResponsePerUser();
+                        } catch(err) {
+                            response[formId].form.only_one_response = false;
+                        }
+
+                        try {
+                            response[formId].form.show_link_to_another = form.hasRespondAgainLink();
+                        } catch(err) {
+                            response[formId].form.show_link_to_another = false;
+                        }
+
+                        try {
+                            response[formId].form.can_edit_response = form.canEditResponse();
+                        } catch(err) {
+                            response[formId].form.can_edit_response = false;
+                        }
+
+                        for (var key in form) {
+                            try {
+                                if (key.substring(0, 3) == 'get') {
+                                    response[formId].form[key.replace(/([a-z])([A-Z])/g, '$1_$2').replace('get_', '').toLowerCase()] = form[key]();
+                                }
+                            } catch(err) {
+                            }
+                        }
+
+                        var formItems = form.getItems();
+
+                        if (formItems.length) {
+                            for (var i = 0; i < formItems.length; i++) {
+                                var item = formItems[i];
+
+                                var responseItem = this.getElement(item);
+
+                                response[formId].fields.push(responseItem);
+                            }
+                        }
+                    } catch(err) {
+                        response[formId] = {
+                            status: false,
+                            message: err.message
+                        };
+                    }
                 }
             }
 

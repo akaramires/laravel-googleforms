@@ -1,10 +1,3 @@
-/**
- * Created by Elmar <e.abdurayimov@gmail.com> Abdurayimov
- * @copyright (C)Copyright 2016 elmar.eatech.org
- * Date: 2/25/16
- * Time: 2:52 PM
- */
-
 function BatchRequest() {
     var args = arguments[0];
     var response = {
@@ -29,7 +22,7 @@ function BatchRequest() {
         }
 
         if (args.hasOwnProperty('fields') && args.fields.length) {
-            for (var i in args.fields) {
+            for(var i in args.fields) {
                 var field = args.fields[i];
 
                 field.parameters.params.form_id = form_id;
