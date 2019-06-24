@@ -4,7 +4,8 @@
   "keywords": [
     "google scripts",
     "google forms",
-    "api"
+    "api",
+    "laravel"
   ],
   "authors": [
     {
@@ -20,7 +21,7 @@
     "google/apiclient": "^1.1"
   },
   "require-dev": {
-    "illuminate/support": "~5.0|~5.1"
+    "illuminate/support": "~5.*"
   },
   "autoload": {
     "psr-4": {
